@@ -5,23 +5,23 @@ import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
 import { quoteRequestSchema } from "@/lib/quote-request-schema";
 import { submitQuoteRequest } from "@/lib/quote-requests.functions";
+import { products } from "@/lib/products";
 import balconyImage from "@/assets/kts-balcony-net.jpg";
 import installationImage from "@/assets/kts-installation.jpg";
 import cricketImage from "@/assets/kts-cricket-net.jpg";
 
 const phoneNumber = "7989625040";
-const quoteLink = `mailto:ktsafetynets@gmail.com?subject=${encodeURIComponent("Safety net enquiry")}`;
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "KTS Safety Nets | A safer space, beautifully protected" },
+      { title: "KT Safety Nets | A safer space, beautifully protected" },
       {
         name: "description",
         content:
-          "Explore balcony, child, bird and sports safety net solutions from KTS Safety Nets. Call 7989625040 or email ktsafetynets@gmail.com.",
+          "Explore balcony, children’s, bird, building and sports safety solutions from KT Safety Nets. Call 7989625040 or email ktsafetynets@gmail.com.",
       },
-      { property: "og:title", content: "KTS Safety Nets | A safer space, beautifully protected" },
+      { property: "og:title", content: "KT Safety Nets | A safer space, beautifully protected" },
       {
         property: "og:description",
         content: "Thoughtful safety net solutions for homes, balconies and sports spaces.",
@@ -33,44 +33,10 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const services = [
-  {
-    number: "01",
-    title: "Balcony safety nets",
-    description: "An added layer of protection for balconies, windows and open spaces.",
-    kind: "home",
-  },
-  {
-    number: "02",
-    title: "Children’s safety nets",
-    description: "Help make high-rise living feel more at ease for the whole family.",
-    kind: "family",
-  },
-  {
-    number: "03",
-    title: "Bird protection nets",
-    description: "Keep balconies and building openings cleaner and bird-free.",
-    kind: "bird",
-  },
-  {
-    number: "04",
-    title: "Cricket practice nets",
-    description: "Enclosed netting for focused practice at home, school or club.",
-    kind: "sport",
-  },
-  {
-    number: "05",
-    title: "Duct area nets",
-    description: "Cover open shafts and ducts while keeping air moving through.",
-    kind: "building",
-  },
-  {
-    number: "06",
-    title: "Invisible grills",
-    description: "A subtle, open-feeling option for added window and balcony safety.",
-    kind: "lines",
-  },
-];
+const services = products.map((product, index) => ({
+  ...product,
+  number: String(index + 1).padStart(2, "0"),
+}));
 
 function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -80,15 +46,15 @@ function HomePage() {
     <main className="site-shell">
       <div className="topline">
         <span>Protection for the spaces you love</span>
-        <a href={`tel:${phoneNumber}`} aria-label={`Call KTS Safety Nets at ${phoneNumber}`}>
+        <a href={`tel:${phoneNumber}`} aria-label={`Call KT Safety Nets at ${phoneNumber}`}>
           <Phone aria-hidden="true" />
           <span>{phoneNumber}</span>
         </a>
       </div>
 
       <header className="site-header">
-        <a className="brand" href="#top" onClick={closeMenu} aria-label="KTS Safety Nets home">
-          <span className="brand-mark">KTS</span>
+        <a className="brand" href="#top" onClick={closeMenu} aria-label="KT Safety Nets home">
+          <span className="brand-mark">KT</span>
           <span className="brand-name">SAFETY NETS<span>SECURE LIVING, OPEN VIEWS</span></span>
         </a>
         <Button
@@ -102,7 +68,7 @@ function HomePage() {
           {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
         </Button>
         <nav className={`main-nav${menuOpen ? " is-open" : ""}`} aria-label="Main navigation">
-          <a href="#services" onClick={closeMenu}>Our services</a>
+          <a href="#services" onClick={closeMenu}>Our products</a>
           <a href="#approach" onClick={closeMenu}>Our approach</a>
           <a href="#contact" onClick={closeMenu}>Contact</a>
           <Button asChild className="header-cta">
@@ -115,7 +81,7 @@ function HomePage() {
         <img className="hero-image" src={balconyImage} alt="A bright apartment balcony protected by a fine safety net" width={1536} height={1024} fetchPriority="high" />
         <div className="hero-shade" />
         <div className="hero-content">
-          <p className="eyebrow"><span /> KTS SAFETY NETS · EVERYDAY PEACE OF MIND</p>
+          <p className="eyebrow"><span /> KT SAFETY NETS · EVERYDAY PEACE OF MIND</p>
           <h1 id="hero-title">A safer space.<br />Room to <span>breathe.</span></h1>
           <p className="hero-copy">Thoughtful safety net solutions for balconies, homes and sports spaces—designed to protect without closing in your view.</p>
           <div className="hero-actions">
@@ -155,7 +121,7 @@ function HomePage() {
 
           <div className="service-list">
             {services.map((service) => (
-              <a className="service-row" href={quoteLink} key={service.number} aria-label={`Enquire about ${service.title}`}>
+              <a className="service-row" href={`/products/${service.slug}`} key={service.number} aria-label={`View ${service.title}`}>
                 <span className="service-number">{service.number}</span>
                 <span className="service-text"><strong>{service.title}</strong><span>{service.description}</span></span>
                 <span className={`service-symbol service-symbol-${service.kind}`} aria-hidden="true"><ArrowRight /></span>
@@ -178,7 +144,7 @@ function HomePage() {
           <img src={cricketImage} alt="Cricket practice area enclosed with protective sports netting" width={1024} height={1024} loading="lazy" />
           <span className="image-note">MADE FOR HOME, BUILDING & SPORT</span>
         </div>
-        <span className="approach-index">KTS / 02</span>
+        <span className="approach-index">KT / 02</span>
       </section>
 
       <section className="quote-section section-wrap" id="quote" aria-labelledby="quote-title">
@@ -213,8 +179,8 @@ function HomePage() {
       </section>
 
       <footer className="site-footer">
-        <a className="brand footer-brand" href="#top" aria-label="KTS Safety Nets, back to top">
-          <span className="brand-mark">KTS</span>
+        <a className="brand footer-brand" href="#top" aria-label="KT Safety Nets, back to top">
+          <span className="brand-mark">KT</span>
           <span className="brand-name">SAFETY NETS<span>SECURE LIVING, OPEN VIEWS</span></span>
         </a>
         <p>Protection for the spaces you love.</p>
@@ -223,7 +189,7 @@ function HomePage() {
           <a href="https://www.facebook.com/ktsafetynets" target="_blank" rel="noreferrer" aria-label="Facebook: ktsafetynets"><span className="facebook-mark" aria-hidden="true">f</span></a>
           <a href="https://www.youtube.com/@narendrabond85" target="_blank" rel="noreferrer" aria-label="YouTube: narendrabond85"><Youtube aria-hidden="true" /></a>
         </div>
-        <span className="copyright">© {new Date().getFullYear()} KTS Safety Nets</span>
+        <span className="copyright">© {new Date().getFullYear()} KT Safety Nets</span>
       </footer>
     </main>
   );

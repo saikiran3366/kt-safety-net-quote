@@ -1,0 +1,5 @@
+- [x] Rebrand customer-facing copy and metadata to KT Safety Nets.
+- [x] Add dedicated pages for all nine safety and home products, with clear navigation and quote links.
+- [x] Confirm the uploaded assets are references only; note logo and video files are still needed.
+- [ ] Verify the quote flow remains available from product pages and commit the changes.
+- [ ] Add the owner's actual logo and installation videos when those files are uploaded.

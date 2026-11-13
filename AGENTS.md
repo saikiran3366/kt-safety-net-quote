@@ -30,5 +30,5 @@ use the editor.
 <!-- LOVABLE:END -->
 
 ## Project architecture
-- Keep the KTS Safety Nets brochure site as a single homepage with in-page section navigation, matching the supplied one-page business brief.
+- Keep the homepage as the product overview and use individual product routes for shareable product details, matching the business brief.
 - Lead-capture forms insert through a server function using the server-side client, and their table stays RLS-enabled with no anon or authenticated read policies — browser code must never be able to read back other people's submissions.
