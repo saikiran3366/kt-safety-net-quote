@@ -1,7 +1,10 @@
-import { useState } from "react";
-import { ArrowDown, ArrowRight, Instagram, Mail, Menu, Phone, ShieldCheck, X, Youtube } from "lucide-react";
+import { useState, type FormEvent } from "react";
+import { ArrowDown, ArrowRight, CheckCircle2, Instagram, Mail, Menu, Phone, ShieldCheck, X, Youtube } from "lucide-react";
 import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
+import { quoteRequestSchema } from "@/lib/quote-request-schema";
+import { submitQuoteRequest } from "@/lib/quote-requests.functions";
 import balconyImage from "@/assets/kts-balcony-net.jpg";
 import installationImage from "@/assets/kts-installation.jpg";
 import cricketImage from "@/assets/kts-cricket-net.jpg";
@@ -103,7 +106,7 @@ function HomePage() {
           <a href="#approach" onClick={closeMenu}>Our approach</a>
           <a href="#contact" onClick={closeMenu}>Contact</a>
           <Button asChild className="header-cta">
-            <a href={quoteLink} onClick={closeMenu}>Request a quote <ArrowRight aria-hidden="true" /></a>
+            <a href="#quote" onClick={closeMenu}>Request a quote <ArrowRight aria-hidden="true" /></a>
           </Button>
         </nav>
       </header>
@@ -168,7 +171,7 @@ function HomePage() {
           <h2 id="approach-title">Good protection<br />should feel <span>natural.</span></h2>
           <p>We help you find a practical netting solution for your home or sports space, with an installation planned around the way you use it.</p>
           <Button asChild variant="outline" className="approach-cta">
-            <a href={quoteLink}>Talk through your needs <ArrowRight aria-hidden="true" /></a>
+            <a href="#quote">Talk through your needs <ArrowRight aria-hidden="true" /></a>
           </Button>
         </div>
         <div className="approach-image-wrap">
@@ -176,6 +179,21 @@ function HomePage() {
           <span className="image-note">MADE FOR HOME, BUILDING & SPORT</span>
         </div>
         <span className="approach-index">KTS / 02</span>
+      </section>
+
+      <section className="quote-section section-wrap" id="quote" aria-labelledby="quote-title">
+        <div className="quote-layout">
+          <div className="quote-copy">
+            <p className="eyebrow eyebrow-dark">TELL US ABOUT YOUR SPACE</p>
+            <h2 id="quote-title">Request a <span>quote.</span></h2>
+            <p>Tell us what you'd like protected and how to reach you. We'll call you back to talk through the options and give you a price.</p>
+            <div className="quote-alt">
+              <a href={`tel:${phoneNumber}`}><Phone aria-hidden="true" /> Call {phoneNumber}</a>
+              <a href="mailto:ktsafetynets@gmail.com"><Mail aria-hidden="true" /> ktsafetynets@gmail.com</a>
+            </div>
+          </div>
+          <QuoteForm />
+        </div>
       </section>
 
       <section className="contact-section" id="contact" aria-labelledby="contact-title">
@@ -189,6 +207,7 @@ function HomePage() {
               <a href={`tel:${phoneNumber}`}><Phone aria-hidden="true" /> {phoneNumber}</a>
             </Button>
             <a className="contact-email" href="mailto:ktsafetynets@gmail.com"><Mail aria-hidden="true" /> ktsafetynets@gmail.com</a>
+            <a className="contact-email" href="#quote">Or send a quote request <ArrowRight aria-hidden="true" /></a>
           </div>
         </div>
       </section>
@@ -207,5 +226,162 @@ function HomePage() {
         <span className="copyright">© {new Date().getFullYear()} KTS Safety Nets</span>
       </footer>
     </main>
+  );
+}
+
+const quoteServiceOptions = [...services.map((service) => service.title), "Something else"];
+const emptyQuote = { name: "", phone: "", email: "", service: "", details: "", website: "" };
+const quoteFailureMessage = "We couldn't send your request just now. Please call us on 7989625040.";
+
+type QuoteErrors = {
+  name?: string | undefined;
+  phone?: string | undefined;
+  email?: string | undefined;
+  service?: string | undefined;
+  details?: string | undefined;
+};
+
+function QuoteForm() {
+  const [values, setValues] = useState(emptyQuote);
+  const [errors, setErrors] = useState<QuoteErrors>({});
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "failed">("idle");
+  const sendQuote = useServerFn(submitQuoteRequest);
+
+  const setField = (field: keyof typeof emptyQuote, value: string) =>
+    setValues((current) => ({ ...current, [field]: value }));
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const parsed = quoteRequestSchema.safeParse(values);
+    if (!parsed.success) {
+      const fields = parsed.error.flatten().fieldErrors;
+      setErrors({
+        name: fields.name?.[0],
+        phone: fields.phone?.[0],
+        email: fields.email?.[0],
+        service: fields.service?.[0],
+        details: fields.details?.[0],
+      });
+      return;
+    }
+
+    setErrors({});
+    setStatus("sending");
+
+    try {
+      const result = await sendQuote({ data: parsed.data });
+      if (result.ok) {
+        setStatus("sent");
+        setValues(emptyQuote);
+      } else {
+        setStatus("failed");
+      }
+    } catch {
+      setStatus("failed");
+    }
+  }
+
+  if (status === "sent") {
+    return (
+      <div className="quote-success" role="status">
+        <CheckCircle2 aria-hidden="true" />
+        <h3>Thank you — your request is in.</h3>
+        <p>We'll call you back on the number you gave us. If it's urgent, you can reach us right away on {phoneNumber}.</p>
+        <button type="button" className="quote-again" onClick={() => setStatus("idle")}>
+          Send another request
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <form className="quote-form" onSubmit={handleSubmit} noValidate>
+      <div className="field" data-invalid={errors.name ? "true" : undefined}>
+        <label htmlFor="quote-name">Your name</label>
+        <input
+          id="quote-name"
+          name="name"
+          value={values.name}
+          onChange={(event) => setField("name", event.target.value)}
+          autoComplete="name"
+        />
+        {errors.name ? <span className="field-error">{errors.name}</span> : null}
+      </div>
+
+      <div className="field" data-invalid={errors.phone ? "true" : undefined}>
+        <label htmlFor="quote-phone">Phone number</label>
+        <input
+          id="quote-phone"
+          name="phone"
+          type="tel"
+          value={values.phone}
+          onChange={(event) => setField("phone", event.target.value)}
+          autoComplete="tel"
+          placeholder="7989625040"
+        />
+        {errors.phone ? <span className="field-error">{errors.phone}</span> : null}
+      </div>
+
+      <div className="field" data-invalid={errors.email ? "true" : undefined}>
+        <label htmlFor="quote-email">Email (optional)</label>
+        <input
+          id="quote-email"
+          name="email"
+          type="email"
+          value={values.email}
+          onChange={(event) => setField("email", event.target.value)}
+          autoComplete="email"
+          placeholder="you@example.com"
+        />
+        {errors.email ? <span className="field-error">{errors.email}</span> : null}
+      </div>
+
+      <div className="field" data-invalid={errors.service ? "true" : undefined}>
+        <label htmlFor="quote-service">What do you need?</label>
+        <select
+          id="quote-service"
+          name="service"
+          value={values.service}
+          onChange={(event) => setField("service", event.target.value)}
+        >
+          <option value="">Choose one</option>
+          {quoteServiceOptions.map((option) => (
+            <option value={option} key={option}>{option}</option>
+          ))}
+        </select>
+        {errors.service ? <span className="field-error">{errors.service}</span> : null}
+      </div>
+
+      <div className="field" data-invalid={errors.details ? "true" : undefined}>
+        <label htmlFor="quote-details">Anything about your space? (optional)</label>
+        <textarea
+          id="quote-details"
+          name="details"
+          value={values.details}
+          onChange={(event) => setField("details", event.target.value)}
+          placeholder="Floor number, size of the area, when you'd like it done…"
+        />
+        {errors.details ? <span className="field-error">{errors.details}</span> : null}
+      </div>
+
+      <input
+        className="quote-hp"
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        value={values.website}
+        onChange={(event) => setField("website", event.target.value)}
+      />
+
+      {status === "failed" ? <p className="quote-failed" role="alert">{quoteFailureMessage}</p> : null}
+
+      <Button type="submit" size="lg" className="quote-submit" disabled={status === "sending"}>
+        {status === "sending" ? "Sending…" : "Send my request"} <ArrowRight aria-hidden="true" />
+      </Button>
+      <p className="quote-note">Prefer to talk? Call {phoneNumber} any time.</p>
+    </form>
   );
 }

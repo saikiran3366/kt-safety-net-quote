@@ -271,6 +271,31 @@
 .social-links a:hover { border-color: var(--primary); color: var(--primary); }
 .social-links svg { width: 16px; height: 16px; }
 .facebook-mark { font-family: Arial, sans-serif; font-size: 21px; font-weight: 700; }
+.quote-section { background: var(--background); }
+.quote-layout { display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 62px; align-items: start; }
+.quote-copy h2 { margin: 16px 0 0; font-family: "Archivo Black", sans-serif; font-size: clamp(38px, 4.3vw, 58px); line-height: 1.08; font-weight: 400; }
+.quote-copy h2 span { color: var(--primary); }
+.quote-copy > p:not(.eyebrow) { max-width: 400px; margin: 18px 0 0; color: var(--muted-foreground); font-size: 16px; line-height: 1.7; }
+.quote-alt { display: flex; flex-direction: column; align-items: flex-start; gap: 13px; margin-top: 28px; }
+.quote-alt a { display: inline-flex; align-items: center; gap: 10px; color: var(--foreground); font-size: 14px; font-weight: 600; text-decoration: none; }
+.quote-alt a svg { width: 16px; color: var(--primary); }
+.quote-form { display: grid; gap: 17px; }
+.quote-form .field { display: grid; gap: 7px; }
+.quote-form .field label { color: var(--muted-foreground); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; }
+.quote-form input, .quote-form select, .quote-form textarea { width: 100%; padding: 12px 14px; border: 1px solid var(--input); border-radius: 2px; background: var(--card); color: var(--foreground); font-family: inherit; font-size: 15px; }
+.quote-form textarea { min-height: 112px; resize: vertical; line-height: 1.6; }
+.quote-form input:focus, .quote-form select:focus, .quote-form textarea:focus { outline: 2px solid var(--ring); outline-offset: 1px; }
+.quote-form .field[data-invalid="true"] input, .quote-form .field[data-invalid="true"] select, .quote-form .field[data-invalid="true"] textarea { border-color: var(--destructive); }
+.field-error { color: var(--destructive); font-size: 12px; font-weight: 600; }
+.quote-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.quote-failed { margin: 0; padding: 12px 14px; border-left: 3px solid var(--destructive); background: var(--muted); color: var(--foreground); font-size: 14px; line-height: 1.5; }
+.quote-submit { justify-self: start; height: 48px; padding: 0 22px; border-radius: 2px; font-weight: 600; }
+.quote-note { margin: 0; color: var(--muted-foreground); font-size: 12px; }
+.quote-success { padding: 38px 32px; border: 1px solid var(--border); background: var(--card); }
+.quote-success svg { width: 30px; height: 30px; color: var(--primary); }
+.quote-success h3 { margin: 14px 0 0; font-family: "Archivo Black", sans-serif; font-size: 24px; font-weight: 400; line-height: 1.25; }
+.quote-success p { margin: 12px 0 0; color: var(--muted-foreground); font-size: 15px; line-height: 1.7; }
+.quote-again { margin-top: 20px; padding: 0; border: 0; background: none; color: var(--primary); font-family: inherit; font-size: 14px; font-weight: 700; text-decoration: underline; cursor: pointer; }
 
 @media (min-width: 1500px) { .hero-content { margin-left: max(10%, calc((100vw - 1260px) / 2)); } }
 @media (max-width: 900px) {
@@ -282,6 +307,7 @@
   .service-layout { grid-template-columns: 0.85fr 1.15fr; gap: 30px; }
   .approach-section { padding-right: 7%; padding-left: 7%; }
   .contact-section { padding-right: 7%; padding-left: 7%; }
+  .quote-layout { gap: 34px; }
   .approach-index { right: 7%; }
 }
 @media (max-width: 680px) {
@@ -325,6 +351,10 @@
   .approach-copy > p:not(.eyebrow) { margin-top: 16px; font-size: 15px; }
   .approach-image-wrap { min-height: 330px; }
   .contact-section { padding: 55px 23px; }
+  .quote-layout { grid-template-columns: 1fr; gap: 32px; }
+  .quote-copy > p:not(.eyebrow) { max-width: 440px; font-size: 15px; }
+  .quote-form { gap: 15px; }
+  .quote-success { padding: 28px 22px; }
   .contact-inner { align-items: flex-start; flex-direction: column; gap: 27px; }
   .contact-inner h2 { font-size: 36px; }
   .contact-actions { gap: 13px; }

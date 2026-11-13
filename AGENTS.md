@@ -31,3 +31,4 @@ use the editor.
 
 ## Project architecture
 - Keep the KTS Safety Nets brochure site as a single homepage with in-page section navigation, matching the supplied one-page business brief.
+- Lead-capture forms insert through a server function using the server-side client, and their table stays RLS-enabled with no anon or authenticated read policies — browser code must never be able to read back other people's submissions.
