@@ -13,6 +13,9 @@ import cricketImage from "@/assets/kts-cricket-net.jpg";
 const phoneNumber = "7989625040";
 
 export const Route = createFileRoute("/")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    service: typeof search["service"] === "string" ? search["service"] : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "KT Safety Nets | A safer space, beautifully protected" },
@@ -40,6 +43,7 @@ const services = products.map((product, index) => ({
 
 function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { service: initialService } = Route.useSearch();
   const closeMenu = () => setMenuOpen(false);
 
   return (
@@ -158,7 +162,7 @@ function HomePage() {
               <a href="mailto:ktsafetynets@gmail.com"><Mail aria-hidden="true" /> ktsafetynets@gmail.com</a>
             </div>
           </div>
-          <QuoteForm />
+          <QuoteForm initialService={initialService ?? ""} />
         </div>
       </section>
 
@@ -207,8 +211,8 @@ type QuoteErrors = {
   details?: string | undefined;
 };
 
-function QuoteForm() {
-  const [values, setValues] = useState(emptyQuote);
+function QuoteForm({ initialService }: { initialService: string }) {
+  const [values, setValues] = useState(() => ({ ...emptyQuote, service: initialService }));
   const [errors, setErrors] = useState<QuoteErrors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "failed">("idle");
   const sendQuote = useServerFn(submitQuoteRequest);

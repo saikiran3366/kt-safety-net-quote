@@ -10,7 +10,7 @@ function ProductNotFound() {
     <main className="product-message">
       <p className="eyebrow eyebrow-dark">KT SAFETY NETS</p>
       <h1>This product page isn’t available.</h1>
-      <Link to="/" hash="services">Browse all products <ArrowRight aria-hidden="true" /></Link>
+      <Link to="/" search={{ service: undefined }} hash="services">Browse all products <ArrowRight aria-hidden="true" /></Link>
     </main>
   );
 }
@@ -20,7 +20,7 @@ function ProductError() {
     <main className="product-message">
       <p className="eyebrow eyebrow-dark">KT SAFETY NETS</p>
       <h1>This page couldn’t load.</h1>
-      <Link to="/">Return to the home page <ArrowRight aria-hidden="true" /></Link>
+      <Link to="/" search={{ service: undefined }}>Return to the home page <ArrowRight aria-hidden="true" /></Link>
     </main>
   );
 }
@@ -65,13 +65,13 @@ function ProductPage() {
         </a>
       </div>
       <header className="site-header product-header">
-        <Link className="brand" to="/" aria-label="KT Safety Nets home">
+        <Link className="brand" to="/" search={{ service: undefined }} aria-label="KT Safety Nets home">
           <span className="brand-mark">KT</span>
           <span className="brand-name">SAFETY NETS<span>SECURE LIVING, OPEN VIEWS</span></span>
         </Link>
         <nav className="product-nav" aria-label="Product navigation">
-          <Link to="/" hash="services"><ArrowLeft aria-hidden="true" /> All products</Link>
-          <Link to="/" hash="quote">Request a quote <ArrowRight aria-hidden="true" /></Link>
+          <Link to="/" search={{ service: undefined }} hash="services"><ArrowLeft aria-hidden="true" /> All products</Link>
+          <Link to="/" search={{ service: undefined }} hash="quote">Request a quote <ArrowRight aria-hidden="true" /></Link>
         </nav>
       </header>
 
@@ -85,9 +85,9 @@ function ProductPage() {
             <p className="hero-copy">{product.description}</p>
             <div className="hero-actions">
               <Button asChild size="lg" className="action-button">
-                <Link to="/" hash="quote">Ask about this product <ArrowRight aria-hidden="true" /></Link>
+                <Link to="/" search={{ service: product.title }} hash="quote">Ask about this product <ArrowRight aria-hidden="true" /></Link>
               </Button>
-              <Link className="text-link" to="/" hash="services"><ArrowLeft aria-hidden="true" /> Explore all products</Link>
+              <Link className="text-link" to="/" search={{ service: undefined }} hash="services"><ArrowLeft aria-hidden="true" /> Explore all products</Link>
             </div>
           </div>
           <div className="hero-caption"><span>MADE FOR YOUR SPACE</span><span>KT SAFETY NETS</span></div>
@@ -105,7 +105,7 @@ function ProductPage() {
               <p>{product.useCase}</p>
             </div>
             <Button asChild size="lg" className="action-button">
-              <Link to="/" hash="quote">Request a quote <ArrowRight aria-hidden="true" /></Link>
+              <Link to="/" search={{ service: product.title }} hash="quote">Request a quote <ArrowRight aria-hidden="true" /></Link>
             </Button>
           </div>
         </section>
@@ -117,7 +117,7 @@ function ProductPage() {
                 <p className="eyebrow eyebrow-dark">MORE FROM KT SAFETY NETS</p>
                 <h2 id="more-products-title">Explore all <span>products.</span></h2>
               </div>
-              <Link className="collection-back" to="/" hash="services">Back to home <ArrowRight aria-hidden="true" /></Link>
+              <Link className="collection-back" to="/" search={{ service: undefined }} hash="services">Back to home <ArrowRight aria-hidden="true" /></Link>
             </div>
             <div className="product-grid">
               {products.map((item, index) => (
@@ -133,7 +133,7 @@ function ProductPage() {
       </main>
 
       <footer className="site-footer product-footer">
-        <Link className="brand footer-brand" to="/" aria-label="KT Safety Nets, back to home">
+          <Link className="brand footer-brand" to="/" search={{ service: undefined }} aria-label="KT Safety Nets, back to home">
           <span className="brand-mark">KT</span>
           <span className="brand-name">SAFETY NETS<span>SECURE LIVING, OPEN VIEWS</span></span>
         </Link>
