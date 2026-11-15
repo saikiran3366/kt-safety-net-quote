@@ -1,6 +1,12 @@
 import balconyImage from "@/assets/kts-balcony-net.jpg";
 import cricketImage from "@/assets/kts-cricket-net.jpg";
-import installationImage from "@/assets/kts-installation.jpg";
+import birdImage from "@/assets/product-bird-protection-net.jpg";
+import childrenImage from "@/assets/product-childrens-safety-net.jpg";
+import ductImage from "@/assets/product-duct-area-net.jpg";
+import invisibleGrillImage from "@/assets/product-invisible-grill.jpg";
+import coconutImage from "@/assets/product-coconut-safety-net.jpg";
+import bambooBlindsImage from "@/assets/product-bamboo-blinds.jpg";
+import glassNetImage from "@/assets/product-glass-safety-net.jpg";
 
 export const products = [
   {
@@ -18,8 +24,8 @@ export const products = [
     description: "Help make high-rise living feel more at ease for the whole family.",
     useCase: "For families looking to add protection around balconies, windows and open spaces.",
     kind: "family",
-    image: balconyImage,
-    imageAlt: "A balcony with protective safety netting",
+    image: childrenImage,
+    imageAlt: "A child looking out from a balcony protected by a safety net",
   },
   {
     slug: "bird-protection-nets",
@@ -27,8 +33,8 @@ export const products = [
     description: "Help keep balconies and building openings cleaner and bird-free.",
     useCase: "For balconies, windows and building openings where bird access is a concern.",
     kind: "bird",
-    image: balconyImage,
-    imageAlt: "An apartment balcony protected with netting",
+    image: birdImage,
+    imageAlt: "Bird protection netting fitted across an apartment balcony",
   },
   {
     slug: "cricket-practice-nets",
@@ -45,8 +51,8 @@ export const products = [
     description: "Cover open shafts and ducts while keeping air moving through.",
     useCase: "For open duct and shaft areas in residential or commercial buildings.",
     kind: "building",
-    image: installationImage,
-    imageAlt: "Safety net installation in a building",
+    image: ductImage,
+    imageAlt: "A building shaft secured with a fitted safety net",
   },
   {
     slug: "invisible-grills",
@@ -54,8 +60,8 @@ export const products = [
     description: "A subtle, open-feeling option for added window and balcony safety.",
     useCase: "For windows and balconies where an open view is important.",
     kind: "lines",
-    image: balconyImage,
-    imageAlt: "An open balcony with a clear view",
+    image: invisibleGrillImage,
+    imageAlt: "Fine invisible grill wires fitted across a bright apartment balcony",
   },
   {
     slug: "coconut-safety-nets",
@@ -63,8 +69,8 @@ export const products = [
     description: "Protective netting around coconut trees can help catch falling coconuts before they reach nearby areas.",
     useCase: "For coconut trees near homes, walkways or other areas people use.",
     kind: "bird",
-    image: installationImage,
-    imageAlt: "Safety netting installation",
+    image: coconutImage,
+    imageAlt: "A coconut palm protected by a wide safety net in a residential garden",
   },
   {
     slug: "bamboo-blinds",
@@ -72,8 +78,8 @@ export const products = [
     description: "Natural shade and privacy for balconies and other outdoor spaces.",
     useCase: "For balconies and outdoor areas where added shade and privacy are wanted.",
     kind: "home",
-    image: balconyImage,
-    imageAlt: "A sunlit balcony with open views",
+    image: bambooBlindsImage,
+    imageAlt: "Bamboo blinds providing shade on a modern apartment balcony",
   },
   {
     slug: "glass-safety-nets",
@@ -81,8 +87,8 @@ export const products = [
     description: "An added layer of protection around glass balconies and windows while keeping an open appearance.",
     useCase: "For glass balconies, windows and other open areas.",
     kind: "lines",
-    image: balconyImage,
-    imageAlt: "A bright glass-fronted balcony with an open view",
+    image: glassNetImage,
+    imageAlt: "A glass-fronted balcony with transparent safety netting and an open view",
   },
 ] as const;
 

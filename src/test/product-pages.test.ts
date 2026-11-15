@@ -15,4 +15,8 @@ describe("product pages", () => {
       "glass-safety-nets",
     ]);
   });
+
+  it("uses a distinct product image for every catalog item", () => {
+    expect(new Set(products.map((product) => product.image)).size).toBe(9);
+  });
 });

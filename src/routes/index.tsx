@@ -1,13 +1,12 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { ArrowDown, ArrowRight, CheckCircle2, Instagram, Mail, Menu, Phone, ShieldCheck, X, Youtube } from "lucide-react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
 import { quoteRequestSchema } from "@/lib/quote-request-schema";
 import { submitQuoteRequest } from "@/lib/quote-requests.functions";
 import { products } from "@/lib/products";
 import balconyImage from "@/assets/kts-balcony-net.jpg";
-import installationImage from "@/assets/kts-installation.jpg";
 import cricketImage from "@/assets/kts-cricket-net.jpg";
 
 const phoneNumber = "7989625040";
@@ -113,25 +112,34 @@ function HomePage() {
           <p className="section-description">From the balcony at home to the practice ground, find the right netting for your space and the people in it.</p>
         </div>
 
-        <div className="service-layout">
-          <article className="feature-service">
-            <img src={installationImage} alt="A trained installer carefully fitting balcony safety netting" width={1024} height={1024} loading="lazy" />
-            <div className="feature-caption">
-              <span className="feature-kicker">THE RIGHT FIT, THE RIGHT FINISH</span>
-              <h3>Every space has its own solution.</h3>
-              <a href={`tel:${phoneNumber}`} aria-label="Call us to discuss your space"><ArrowRight aria-hidden="true" /></a>
-            </div>
-          </article>
-
-          <div className="service-list">
-            {services.map((service) => (
-              <a className="service-row" href={`/products/${service.slug}`} key={service.number} aria-label={`View ${service.title}`}>
-                <span className="service-number">{service.number}</span>
-                <span className="service-text"><strong>{service.title}</strong><span>{service.description}</span></span>
-                <span className={`service-symbol service-symbol-${service.kind}`} aria-hidden="true"><ArrowRight /></span>
-              </a>
-            ))}
-          </div>
+        <div className="product-catalog">
+          {services.map((service) => (
+            <article className="catalog-card" key={service.slug}>
+              <Link
+                className="catalog-card-image"
+                to="/products/$slug"
+                params={{ slug: service.slug }}
+                aria-label={`Explore ${service.title}`}
+              >
+                <img src={service.image} alt={service.imageAlt} width={1200} height={912} loading="lazy" />
+                <span className="catalog-card-number">{service.number}</span>
+              </Link>
+              <div className="catalog-card-content">
+                <h3>
+                  <Link to="/products/$slug" params={{ slug: service.slug }}>{service.title}</Link>
+                </h3>
+                <p>{service.description}</p>
+                <div className="catalog-card-actions">
+                  <Link className="catalog-details" to="/products/$slug" params={{ slug: service.slug }}>
+                    Details <ArrowRight aria-hidden="true" />
+                  </Link>
+                  <Button asChild size="sm" className="catalog-quote">
+                    <Link to="/" search={{ service: service.title }} hash="quote">Get a quote</Link>
+                  </Button>
+                </div>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -216,6 +224,12 @@ function QuoteForm({ initialService }: { initialService: string }) {
   const [errors, setErrors] = useState<QuoteErrors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "failed">("idle");
   const sendQuote = useServerFn(submitQuoteRequest);
+
+  useEffect(() => {
+    if (initialService) {
+      setValues((current) => ({ ...current, service: initialService }));
+    }
+  }, [initialService]);
 
   const setField = (field: keyof typeof emptyQuote, value: string) =>
     setValues((current) => ({ ...current, [field]: value }));

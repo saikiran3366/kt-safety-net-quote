@@ -3,4 +3,4 @@
 - [x] Confirm the uploaded assets are references only; note logo and video files are still needed.
 - [x] Verify the quote flow remains available from product pages and commit the changes.
 - [ ] Add the owner's actual logo and installation videos; blocked until those files are uploaded.
-- [ ] Replace repeated product photos with distinct, relevant visuals and show all products in a browsable, quote-focused catalog.
+- [x] Replace repeated product photos with distinct, relevant visuals and show all products in a browsable, quote-focused catalog.
