@@ -2,5 +2,5 @@
 - [x] Add dedicated pages for all nine safety and home products, with clear navigation and quote links.
 - [x] Confirm the uploaded assets are references only; note logo and video files are still needed.
 - [x] Verify the quote flow remains available from product pages and commit the changes.
-- [ ] Add the owner's actual logo and installation videos; blocked until those files are uploaded.
+- [ ] Add a real installation photo gallery and work-video showcase; blocked until the owner uploads installation photos and videos. The linked YouTube channel is unrelated to safety-net work and must not be embedded.
 - [x] Replace repeated product photos with distinct, relevant visuals and show all products in a browsable, quote-focused catalog.
