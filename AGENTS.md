@@ -32,3 +32,4 @@ use the editor.
 ## Project architecture
 - Keep the homepage as the product overview and use individual product routes for shareable product details, matching the business brief.
 - Lead-capture forms insert through a server function using the server-side client, and their table stays RLS-enabled with no anon or authenticated read policies — browser code must never be able to read back other people's submissions.
+- Keep the small, curated homepage showcase data alongside its page, and clearly label sample media until the owner provides real project media.

@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from "react";
-import { ArrowDown, ArrowRight, CheckCircle2, Instagram, Mail, Menu, Phone, ShieldCheck, X, Youtube } from "lucide-react";
+import { ArrowDown, ArrowRight, CheckCircle2, Instagram, Mail, Menu, Phone, Play, ShieldCheck, X, Youtube } from "lucide-react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,7 @@ import { submitQuoteRequest } from "@/lib/quote-requests.functions";
 import { products } from "@/lib/products";
 import balconyImage from "@/assets/kts-balcony-net.jpg";
 import cricketImage from "@/assets/kts-cricket-net.jpg";
+import installationImage from "@/assets/kts-installation.jpg";
 
 const phoneNumber = "7989625040";
 
@@ -39,6 +40,25 @@ const services = products.map((product, index) => ({
   ...product,
   number: String(index + 1).padStart(2, "0"),
 }));
+
+const workGallery = [
+  { title: "Balcony safety nets", image: balconyImage, alt: "Sample balcony with protective safety netting" },
+  { title: "Children’s safety nets", image: products[1].image, alt: products[1].imageAlt },
+  { title: "Bird protection nets", image: products[2].image, alt: products[2].imageAlt },
+  { title: "Cricket practice nets", image: cricketImage, alt: "Sample cricket practice area enclosed with protective netting" },
+  { title: "Duct area nets", image: products[4].image, alt: products[4].imageAlt },
+  { title: "Invisible grills", image: products[5].image, alt: products[5].imageAlt },
+  { title: "Coconut safety nets", image: products[6].image, alt: products[6].imageAlt },
+  { title: "Bamboo blinds", image: products[7].image, alt: products[7].imageAlt },
+  { title: "Glass safety nets", image: products[8].image, alt: products[8].imageAlt },
+  { title: "Installation preview", image: installationImage, alt: "Sample image showing a safety net installer at work" },
+];
+
+const workVideos = [
+  { title: "Balcony net installation", image: balconyImage },
+  { title: "Sports net installation", image: cricketImage },
+  { title: "Safety net fitting", image: installationImage },
+];
 
 function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -72,6 +92,7 @@ function HomePage() {
         </Button>
         <nav className={`main-nav${menuOpen ? " is-open" : ""}`} aria-label="Main navigation">
           <a href="#services" onClick={closeMenu}>Our products</a>
+          <a href="#work" onClick={closeMenu}>Our work</a>
           <a href="#approach" onClick={closeMenu}>Our approach</a>
           <a href="#contact" onClick={closeMenu}>Contact</a>
           <Button asChild className="header-cta">
@@ -139,6 +160,45 @@ function HomePage() {
                 </div>
               </div>
             </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="work-section section-wrap" id="work" aria-labelledby="work-title">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow eyebrow-dark">A LOOK AT OUR SOLUTIONS</p>
+            <h2 id="work-title">Made for your<br /><span>everyday spaces.</span></h2>
+          </div>
+          <p className="section-description">Explore sample visuals for the safety and home solutions we offer. Add your own completed-work photos when ready.</p>
+        </div>
+
+        <div className="work-gallery" aria-label="Sample product and installation images">
+          {workGallery.map((item) => (
+            <figure className="work-photo" key={item.title}>
+              <img src={item.image} alt={item.alt} loading="lazy" />
+              <figcaption><span>Sample image</span><strong>{item.title}</strong></figcaption>
+            </figure>
+          ))}
+        </div>
+
+        <div className="work-video-heading">
+          <div>
+            <p className="eyebrow eyebrow-dark">SEE HOW IT COMES TOGETHER</p>
+            <h3>Installation videos</h3>
+          </div>
+          <span>Videos coming soon</span>
+        </div>
+        <div className="work-video-grid" aria-label="Installation video placeholders">
+          {workVideos.map((video) => (
+            <div className="work-video-placeholder" key={video.title}>
+              <img src={video.image} alt="" loading="lazy" />
+              <div className="work-video-overlay">
+                <span className="video-play-icon"><Play aria-hidden="true" fill="currentColor" /></span>
+                <strong>{video.title}</strong>
+                <span>Video coming soon</span>
+              </div>
+            </div>
           ))}
         </div>
       </section>
